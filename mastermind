@@ -1,0 +1,30 @@
+
+from random import randrange
+
+def secret_code():
+    """_summary_
+    generation of sequence between 4 colors : Blue(B) Red(R) Green(G) and Yellow(Y)
+    """
+    a = 0
+    b = 0
+    c = 0
+    d = 0
+    i = 0
+    sequence = [a,b,c,d]
+    while i < 4:
+        sequence[i] = randrange(1,4)
+        
+        #Association of colors meanwhile numbers
+        if sequence[i] == 0:
+            sequence[i] = "R"
+        if sequence[i] == 1:
+            sequence[i] = "G"
+        if sequence[i] == 2:
+            sequence[i] = "B"
+        if sequence[i] == 3:
+            sequence[i] = "Y"
+        
+        i+=1
+    print(sequence)
+    
+secret_code()
