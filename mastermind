@@ -33,7 +33,6 @@ def game():
     """
     
     i = 0
-    n = 0
     validation = False
 
     print("Rules: You have to find a sequence of 4 colors (Blue(B) Red(R) Green(G) and Yellow(Y)).\nYou have only 12 attempts\n")
@@ -41,6 +40,7 @@ def game():
     #print(code)
 
     while validation == False:
+        n = 0
         input_user = input("Enter a sequence of 4 colors like\t" "BRGY" "\n")
 
         #Put the sequence into a array
@@ -48,16 +48,20 @@ def game():
 
         #Verification of the sequence entre by the user
         while n < 4:
+
             if tab_input_user[n] != "B" and tab_input_user[n] != "R" and tab_input_user[n] != "G" and tab_input_user[n] != "Y":
                 print(tab_input_user[n],"Is not a valid color, choose between R,G,B and Y\n")
                 validation = False
+                
             else :
                 validation = True
+
             n += 1
+
     print(tab_input_user)
 
     #while i < 4:
-    #    if tab_input_user[i] == code[i]:
-    #        pass
+        #if tab_input_user[i] == code[i]:
+            
         
 game()
