@@ -71,12 +71,15 @@ def game():
     
         while i < 4:
             if user_attempt[i] == code[i]:
-                print("good one")
                 good_place +=1
                 
             if user_attempt[i] != code[i]:
-                print("not good one")
-        
+                pass
+            print("Correct:",good_place,"Partiel:",good_lettre)
+            i+=1
+
+        if good_place == 4:
+            print("you got the right sequence",user_attempt,"in",attempt,"attempts")
 
         attempt += 1
             
