@@ -25,20 +25,13 @@ def secret_code():
             sequence[i] = "Y"
         
         i += 1
-    print(sequence)
-    
-def game():
-    """_summary_
-    fonction which allow the user to play to the mastermind
+    return(sequence)
+
+def input_user():
     """
-    
-    i = 0
+    Put the input in a arry and verify if the sequence is valid
+    """
     validation = False
-
-    print("Rules: You have to find a sequence of 4 colors (Blue(B) Red(R) Green(G) and Yellow(Y)).\nYou have only 12 attempts\n")
-    code = secret_code()
-    #print(code)
-
     while validation == False:
         n = 0
         input_user = input("Enter a sequence of 4 colors like\t" "BRGY" "\n")
@@ -57,11 +50,35 @@ def game():
                 validation = True
 
             n += 1
+    return(tab_input_user)
+    
+def game():
+    """_summary_
+    Fonction which allow the user to play to the mastermind
+    """
+    
+    attempt = 0
+    
+    print("Rules: You have to find a sequence of 4 colors (Blue(B) Red(R) Green(G) and Yellow(Y)).\nYou have only 12 attempts\n")
+    code = secret_code()
+    while attempt < 11:
+        i = 0
+        n = 0
+        good_place = 0
+        good_lettre = 0
+        
+        user_attempt = input_user()
+    
+        while i < 4:
+            if user_attempt[i] == code[i]:
+                print("good one")
+                good_place +=1
+                
+            if user_attempt[i] != code[i]:
+                print("not good one")
+        
 
-    print(tab_input_user)
-
-    #while i < 4:
-        #if tab_input_user[i] == code[i]:
+        attempt += 1
             
         
 game()
