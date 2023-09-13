@@ -27,6 +27,8 @@ def input_user():
     """
     Put the input in a arry and verify if the sequence is valid
     """
+    code = secret_code()
+    lenth =len(code)
     validation = False
     while validation == False:
         n = 0
@@ -34,9 +36,12 @@ def input_user():
 
         #Put the sequence into a array
         tab_input_user = (list(input_user.strip()))
-
+        #check if the lenth is good
+        if len(tab_input_user) != lenth:
+            print("the lenth of your sequence is false, it must be,",lenth,"long\n")
+            validation = False
         #Verification of the sequence entre by the user
-        while n < 4:
+        while n < lenth:
 
             if tab_input_user[n] != "B" and tab_input_user[n] != "R" and tab_input_user[n] != "G" and tab_input_user[n] != "Y":
                 print(tab_input_user[n],"Is not a valid color, choose between R,G,B and Y\n")
