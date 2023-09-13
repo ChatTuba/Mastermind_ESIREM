@@ -111,6 +111,10 @@ def game():
                 score = max_attempt - attempt
                 print("Your score is:",score ,"\n")
                 playing = True
+                stat_score = open(".Score.txt", "a")
+                stat_score.write("\nscore:")
+                stat_score.write(str(score))
+                stat_score.close()
         #option to play again 
         print("Do you want to play again?\n")
         regame = input("yes or no?")
