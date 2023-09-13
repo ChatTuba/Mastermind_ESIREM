@@ -62,6 +62,7 @@ def game():
     score = 0
     attempt_left = 0
     playing = 0
+    max_attempt = 12
 
     while playing == False:
         user_attempt = input_user()
@@ -90,16 +91,16 @@ def game():
 
         print("Correct:",good_place,"Partiel:",good_lettre,"\n")
         attempt += 1
-        attempt_left = 12 - attempt
+        attempt_left = max_attempt - attempt
         print("You got ",attempt_left,"attempts left\n")
 
-        if attempt == 12:
+        if attempt == max_attempt:
             print("Out of attempt! Try again!\n")
             playing = True
 
         if good_place == 4:
             print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
-            score = 12 - attempt
+            score = max_attempt - attempt
             print("Your score is:",score ,"\n")
             playing = True
     
