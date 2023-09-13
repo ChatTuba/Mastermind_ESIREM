@@ -61,27 +61,51 @@ def game():
     
     print("Rules: You have to find a sequence of 4 colors (Blue(B) Red(R) Green(G) and Yellow(Y)).\nYou have only 12 attempts\n")
     code = secret_code()
-    while attempt < 11:
-        i = 0
-        n = 0
+    print(code)
+
+    score = 0
+    attempt_left = 0
+    playing = 0
+
+    while playing == False:
+        user_attempt = input_user()
         good_place = 0
         good_lettre = 0
-        
-        user_attempt = input_user()
-    
-        while i < 4:
-            if user_attempt[i] == code[i]:
-                good_place +=1
+        i = 0
+        n = 0
+
+        #compare the code and the user attempt
+        #seen keep in memory to avoid doubles
+        for i in range(4):
+            for n in range(4):
+                if user_attempt[i] == code[n]:
+                    good_lettre +=1
+                    user_attempt[i] = "Z"
+                    print(user_attempt)
+                    
+                    if i == n:
+                        good_place += 1
+                        user_attempt[i] = "Z"
+                        print(user_attempt)
+                        
+                else:
+                    pass
                 
-            if user_attempt[i] != code[i]:
-                pass
-            print("Correct:",good_place,"Partiel:",good_lettre)
-            i+=1
+            playing = False
+
+        print("Correct:",good_place,"Partiel:",good_lettre,"\n")
+        attempt += 1
+        attempt_left = 12 - attempt
+        print("You got ",attempt_left,"attempts left\n")
+
+        if attempt == 12:
+            print("Out of attempt! Try again!\n")
+            playing = True
 
         if good_place == 4:
-            print("you got the right sequence",user_attempt,"in",attempt,"attempts")
-
-        attempt += 1
-            
-        
+            print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
+            score = 12 - attempt
+            print("Your score is:",score ,"\n")
+            playing = True
+    
 game()
