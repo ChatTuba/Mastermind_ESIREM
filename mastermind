@@ -68,11 +68,16 @@ def game():
     
     play_again = False
     playing = 0
+    stat_game = open(".Game.txt", "r")
+    stat_game.close()
 
     while play_again == False:
-        stat_game = open(".Game.txt", "w")
-        stat_game.write("number total of game:")
+
+        stat_game = open(".Game.txt", "r")
+        var = str(stat_game.read())
+        print("The total of game is:",var)
         stat_game.close()
+
         code,colors = secret_code()
         print(code)
         attempt = 0
@@ -111,14 +116,13 @@ def game():
             if attempt == max_attempt:
                 print("Out of attempt! Try again!\n")
                 playing = True
-                nb_game +=1
+               
 
             if good_place == 4:
                 print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
                 score = max_attempt - attempt
                 print("Your score is:",score ,"\n")
                 playing = True
-                nb_game +=1
                 #put the score in a file
                 stat_score = open(".Score.txt", "a")
                 stat_score.write("\nscore:\t")
@@ -127,7 +131,8 @@ def game():
                 stat_score.write(str(max_attempt))
                 stat_score.write("\tmax attempt.")
                 stat_score.close()
-        
+
+        nb_game +=1
         #put the number of game in a file
         stat_game = open(".Game.txt", "r")
         total_game += nb_game
