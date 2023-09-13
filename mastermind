@@ -61,13 +61,18 @@ def game():
     
     max_attempt = 12
     code,colors = secret_code()
-    
+    nb_game = 0
+    total_game = 0
+
     print("Rules: You have to find a sequence of 4 colors:",colors,".\nYou have only",max_attempt," attempts\n")
     
     play_again = False
     playing = 0
 
     while play_again == False:
+        stat_game = open(".Game.txt", "w")
+        stat_game.write("number total of game:")
+        stat_game.close()
         code,colors = secret_code()
         print(code)
         attempt = 0
@@ -75,6 +80,7 @@ def game():
         attempt_left = 0
         while playing == False:
             user_attempt = input_user()
+            temp = user_attempt
             good_place = 0
             good_lettre = 0
             i = 0
@@ -83,14 +89,14 @@ def game():
             #compare the code and the user attempt
             for i in range(4):
                 for n in range(4):
-                    if user_attempt[i] == code[n]:
+                    if temp[i] == code[n]:
                         good_lettre +=1
-                        #user_attempt[i] = "."
-                        print(user_attempt)
+                        #temp[i] = "."
+                        print(temp,code)
 
                         if i == n:
                             good_place += 1
-                            print(user_attempt)
+                            print(temp)
                             
                     else:
                         pass
@@ -105,16 +111,30 @@ def game():
             if attempt == max_attempt:
                 print("Out of attempt! Try again!\n")
                 playing = True
+                nb_game +=1
 
             if good_place == 4:
                 print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
                 score = max_attempt - attempt
                 print("Your score is:",score ,"\n")
                 playing = True
+                nb_game +=1
+                #put the score in a file
                 stat_score = open(".Score.txt", "a")
-                stat_score.write("\nscore:")
+                stat_score.write("\nscore:\t")
                 stat_score.write(str(score))
+                stat_score.write("\twith\t")
+                stat_score.write(str(max_attempt))
+                stat_score.write("\tmax attempt.")
                 stat_score.close()
+        
+        #put the number of game in a file
+        stat_game = open(".Game.txt", "r")
+        total_game += nb_game
+        stat_game.close()
+        stat_game = open(".Game.txt", "w")
+        stat_game.write(str(total_game))
+
         #option to play again 
         print("Do you want to play again?\n")
         regame = input("yes or no?")
