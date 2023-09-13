@@ -21,18 +21,19 @@ def secret_code():
         color = sequence[n] 
         sequence[n] = colors[color]
         n += 1
-    return(sequence)
+    return(sequence,colors)
 
 def input_user():
     """
     Put the input in a arry and verify if the sequence is valid
     """
-    code = secret_code()
+    code,colors = secret_code()
     lenth =len(code)
     validation = False
     while validation == False:
         n = 0
-        input_user = input("Enter a sequence of 4 colors like\t" "BRGY" "\n")
+        print("Enter a sequence of ",lenth,"colors \n")
+        input_user = input()
 
         #Put the sequence into a array
         tab_input_user = (list(input_user.strip()))
@@ -44,7 +45,7 @@ def input_user():
         while n < lenth:
 
             if tab_input_user[n] != "B" and tab_input_user[n] != "R" and tab_input_user[n] != "G" and tab_input_user[n] != "Y":
-                print(tab_input_user[n],"Is not a valid color, choose between R,G,B and Y\n")
+                print(tab_input_user[n],"Is not a valid color choose between",colors,"\n")
                 validation = False
                 
             else :
@@ -58,55 +59,65 @@ def game():
     Fonction which allow the user to play to the mastermind
     """
     
-    attempt = 0
-    
-    print("Rules: You have to find a sequence of 4 colors (Blue(B) Red(R) Green(G) and Yellow(Y)).\nYou have only 12 attempts\n")
-    code = secret_code()
-    print(code)
-
-    score = 0
-    attempt_left = 0
-    playing = 0
     max_attempt = 12
+    code,colors = secret_code()
+    
+    print("Rules: You have to find a sequence of 4 colors:",colors,".\nYou have only",max_attempt," attempts\n")
+    
+    play_again = False
+    playing = 0
 
-    while playing == False:
-        user_attempt = input_user()
-        good_place = 0
-        good_lettre = 0
-        i = 0
-        n = 0
+    while play_again == False:
+        code,colors = secret_code()
+        print(code)
+        attempt = 0
+        score = 0
+        attempt_left = 0
+        while playing == False:
+            user_attempt = input_user()
+            good_place = 0
+            good_lettre = 0
+            i = 0
+            n = 0
 
-        #compare the code and the user attempt
-        for i in range(4):
-            for n in range(4):
-                if user_attempt[i] == code[n]:
-                    good_lettre +=1
-                    user_attempt[i] = "Z"
-                    print(user_attempt)
-
-                    if i == n:
-                        good_place += 1
-                        user_attempt[i] = "Z"
+            #compare the code and the user attempt
+            for i in range(4):
+                for n in range(4):
+                    if user_attempt[i] == code[n]:
+                        good_lettre +=1
+                        #user_attempt[i] = "."
                         print(user_attempt)
-                        
-                else:
-                    pass
-                
+
+                        if i == n:
+                            good_place += 1
+                            print(user_attempt)
+                            
+                    else:
+                        pass
+                    
+                playing = False
+
+            print("Correct:",good_place,"Partiel:",good_lettre,"\n")
+            attempt += 1
+            attempt_left = max_attempt - attempt
+            print("You got ",attempt_left,"attempts left\n")
+
+            if attempt == max_attempt:
+                print("Out of attempt! Try again!\n")
+                playing = True
+
+            if good_place == 4:
+                print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
+                score = max_attempt - attempt
+                print("Your score is:",score ,"\n")
+                playing = True
+        #option to play again 
+        print("Do you want to play again?\n")
+        regame = input("yes or no?")
+        if regame == "yes":
+            play_again = False
             playing = False
-
-        print("Correct:",good_place,"Partiel:",good_lettre,"\n")
-        attempt += 1
-        attempt_left = max_attempt - attempt
-        print("You got ",attempt_left,"attempts left\n")
-
-        if attempt == max_attempt:
-            print("Out of attempt! Try again!\n")
-            playing = True
-
-        if good_place == 4:
-            print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
-            score = max_attempt - attempt
-            print("Your score is:",score ,"\n")
-            playing = True
+        else:
+            play_again = True
     
 game()
