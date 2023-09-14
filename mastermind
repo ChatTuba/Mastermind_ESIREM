@@ -23,6 +23,31 @@ def secret_code():
         n += 1
     return(sequence,colors)
 
+def user_code():
+    """complementary fonction of bot fcontion. It allow to ask a code to the user.
+    """
+    user_code = input("give a 4 sequence letter between RGBY")
+    tab_user_code = (list(user_code.strip()))
+    validation = False
+    n = 0
+    while validation == False:
+        #check length
+        if len(tab_user_code) != 4:
+            print("the lenth of your sequence is false, it must be 4 long\n")
+            validation = False
+        #check user enter
+        while n < 4:
+
+            if tab_user_code[n] != "B" and tab_user_code[n] != "R" and tab_user_code[n] != "G" and tab_user_code[n] != "Y":
+                print(tab_user_code[n],"Is not a valid color choose between R,B,G and Y\n")
+                validation = False
+                
+            else :
+                validation = True
+
+            n += 1
+    return(user_code)
+
 def input_user():
     """
     Put the input in a arry and verify if the sequence is valid
@@ -198,5 +223,26 @@ def game():
             else:
                 print("you have to choose between play reset and quit!")
                 choice_2 = False
+
+def bot():
+    """fonction to solve intelligibly a game of mastermind
+    """
     
-game()
+
+def main():
+    """selection between bot resolution and human resolution
+    """
+    check = 0
+
+    selection = input("Do you want to play (1) or challenge the bot (2) ?")
+    while check == False:
+        if selection == "1":
+            game()
+            check = True
+        if selection == "2":
+            bot()
+            check = True
+        else:
+            check = False
+
+main()
