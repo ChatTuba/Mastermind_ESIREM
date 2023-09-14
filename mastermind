@@ -13,6 +13,7 @@ def secret_code():
     sequence = []
     color = 0
     while i < lenth_colors:
+        #creation aleatory of a tab 
         sequence.append(randrange(0,lenth_colors))
         i += 1
 
@@ -27,6 +28,7 @@ def user_code():
     """complementary fonction of bot fcontion. It allow to ask a code to the user.
     """
     user_code = input("give a 4 sequence letter between RGBY\n")
+    #switch the sting into a tab
     tab_user_code = (list(user_code.strip()))
     validation = False
     n = 0
@@ -37,7 +39,7 @@ def user_code():
             validation = False
         #check user enter
         while n < 4:
-
+            #check contenu
             if tab_user_code[n] != "B" and tab_user_code[n] != "R" and tab_user_code[n] != "G" and tab_user_code[n] != "Y":
                 print(tab_user_code[n],"Is not a valid color choose between R,B,G and Y\n")
                 validation = False
@@ -224,12 +226,94 @@ def game():
                 print("you have to choose between play reset and quit!")
                 choice_2 = False
 
+def all_solution():
+    """creation of a file with all the solutions of a 4 sequence.
+    """
+    solution = open(".Solution.txt","w")
+    solution.close()
+    i = 0
+    j = 0
+    k = 0
+    n = 0
+    
+    for i in range(5):
+        for j in range(5):
+            for k in range(5):
+                for n in range(5):
+                    table = [i,j,k,n]
+                    solution = open(".Solution.txt","a")
+                    solution.write(str(table))
+                    solution.write("\n")
+                    solution.close()
+                    n+=1
+                k+=1
+            j+=1
+        i+=1
+
+
 def bot():
-    """fonction to solve intelligibly a game of mastermind
+    """fonction to solve intelligibly a game of mastermind for a sequence length = 4
     """
     secret_code = user_code()
-    print(secret_code)
-    
+    all_solution()
+    print("the right sequence is",secret_code)
+
+    i = 0
+    j = 0
+    n = 0
+    attempt = 0
+    colors = ["R","B","G","Y"]
+    try_bot = []
+    correct_indices = []
+    correct_but_misplaced_indices = []
+    good_letter = 0
+    good_place = 0
+    right_sequence = 0
+
+    while right_sequence == False:
+        while i < 4:
+        
+            #creation aleatory of a tab 
+            try_bot.append(randrange(0,4))
+            i += 1
+
+            #Association of colors meanwhile numbers
+        while n < 4:
+            color = try_bot[n] 
+            try_bot[n] = colors[color]
+            n += 1
+
+        print("first try of bot:",try_bot)
+        
+        #compare the two tabs
+        for i in range(4):
+                if try_bot[i] == secret_code[i]:
+                    correct_indices.append(i)
+
+        #misplaced
+        for i in range(4):
+            for n in range(4):
+                if try_bot[i] == secret_code[n] and i not in correct_indices and n not in correct_indices:
+                    correct_but_misplaced_indices.append(i)
+                    break 
+
+        good_place = len(correct_indices)
+        good_letter = len(correct_but_misplaced_indices)
+        print(good_place,good_letter)
+        print(correct_indices,correct_but_misplaced_indices)
+
+        match good_letter:
+            case 0:
+                while j < 4:
+                    if colors[i]:
+                        pass
+            case 1:
+                pass
+            case 2:
+                pass
+            case 3:
+                pass
+
 
 def main():
     """selection between bot resolution and human resolution
