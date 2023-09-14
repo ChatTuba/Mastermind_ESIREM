@@ -66,22 +66,32 @@ def game():
     length = len(colors)
     play_again = False
     playing = 0
+    choice_1 = 0
     stat_game = open(".Game.txt", "r")
     stat_game.close()
 
     #user game choice
     print("what do you want to do?")
-    choice = input(" play (1) , reset statistic (2) or quit the game (3)")
+    while choice_1 == False:
+        choice = input(" play (1) , reset statistic (2) or quit the game (3)")
+        if choice == "1":
+            choice_1 = True
+        if choice == "2":
+            stat_game = open(".Game.txt", "w")
+            stat_game.write("0")
+            stat_game.close()
+            print("statistics was reset!\n")
+            stat_score = open(".Score.txt", "w")
+            stat_score.write("score is none\n")
+            stat_score.close()
+            choice_1 = True
+        if choice == "3":
+            play_again = True
+            choice_1 = True
+        if choice != "1" and choice != "2" and choice != "3":
+            print("You have to choose between 1,2 and 3!")
+            choice_1 = False
 
-    if choice == 2:
-        stat_game = open(".Game.txt", "w")
-        stat_game.write("0")
-        stat_game.close()
-        print("statistics was reset!\n")
-    if choice == 3:
-        stat_score = open(".Score.txt", "w")
-        stat_score.write("score is none\n")
-        stat_score.close()
 
     while play_again == False:
         print("Rules: You have to find a sequence of 4 colors:",colors,".\nYou have only",max_attempt," attempts\n")
@@ -164,11 +174,20 @@ def game():
         stat_game.write(str(total_game))
 
         #option to play again 
-        print("Do you want to play again?\n")
-        regame = input("yes or no?")
-        if regame == "yes":
+        print("What do you want to do?\n")
+        last_choice = input("play again (play), reset statisticq (reset) or quit the game (quit)?")
+        if last_choice == "play":
             play_again = False
             playing = False
+        if last_choice == "reset":
+            stat_game = open(".Game.txt", "w")
+            stat_game.write("0")
+            stat_game.close()
+            stat_score = open(".Score.txt", "w")
+            stat_score.write("score is none\n")
+            stat_score.close()
+            print("statistics was reset!")
+            play_again = True
         else:
             play_again = True
     
