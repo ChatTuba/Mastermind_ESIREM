@@ -67,6 +67,7 @@ def game():
     play_again = False
     playing = 0
     choice_1 = 0
+    choice_2 = 0
     stat_game = open(".Game.txt", "r")
     stat_game.close()
 
@@ -175,20 +176,27 @@ def game():
 
         #option to play again 
         print("What do you want to do?\n")
-        last_choice = input("play again (play), reset statisticq (reset) or quit the game (quit)?")
-        if last_choice == "play":
-            play_again = False
-            playing = False
-        if last_choice == "reset":
-            stat_game = open(".Game.txt", "w")
-            stat_game.write("0")
-            stat_game.close()
-            stat_score = open(".Score.txt", "w")
-            stat_score.write("score is none\n")
-            stat_score.close()
-            print("statistics was reset!")
-            play_again = True
-        else:
-            play_again = True
+        while choice_2 == False:
+            last_choice = input("play again (play), reset statisticq (reset) or quit the game (quit)?")
+            if last_choice == "play":
+                play_again = False
+                playing = False
+                choice_2 = True
+            if last_choice == "reset":
+                stat_game = open(".Game.txt", "w")
+                stat_game.write("0")
+                stat_game.close()
+                stat_score = open(".Score.txt", "w")
+                stat_score.write("score is none\n")
+                stat_score.close()
+                print("statistics was reset!")
+                play_again = True
+                choice_2 = True
+            if last_choice == "quit":
+                play_again = True
+                choice_2 = True
+            else:
+                print("you have to choose between play reset and quit!")
+                choice_2 = False
     
 game()
