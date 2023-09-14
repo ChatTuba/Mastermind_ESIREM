@@ -249,6 +249,7 @@ def all_solution():
                 k+=1
             j+=1
         i+=1
+    return 0
 
 
 def bot():
@@ -269,6 +270,8 @@ def bot():
     good_letter = 0
     good_place = 0
     right_sequence = 0
+    soluce = []
+    
 
     while right_sequence == False:
         while i < 4:
@@ -301,18 +304,39 @@ def bot():
         good_letter = len(correct_but_misplaced_indices)
         print(good_place,good_letter)
         print(correct_indices,correct_but_misplaced_indices)
-
+        
         match good_letter:
             case 0:
                 while j < 4:
-                    if colors[i]:
-                        pass
+                    with open(".Solution.txt","r") as fichier:
+                        lines = fichier.readline()
+                    
+                    for line in lines:
+                        soluce = [str(element) for element in line.split()]
+                        print(soluce)
+                        right_sequence == False
             case 1:
-                pass
+                right_sequence == False
             case 2:
-                pass
+                right_sequence == False
             case 3:
-                pass
+                right_sequence == False
+
+        match good_place:
+            case 0:
+                while j < 4:
+                    with open(".Solution.txt","r") as fichier:
+                        lines = fichier.readline()
+                    
+                    for line in lines:
+                        print(line)
+            case 1:
+                right_sequence == False
+            case 2:
+                right_sequence == False
+            case 3:
+                print("gg! you find the code!")
+                right_sequence == True
 
 
 def main():
