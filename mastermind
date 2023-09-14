@@ -63,52 +63,76 @@ def game():
     code,colors = secret_code()
     nb_game = 0
     total_game = 0
-
-    print("Rules: You have to find a sequence of 4 colors:",colors,".\nYou have only",max_attempt," attempts\n")
-    
+    length = len(colors)
     play_again = False
     playing = 0
     stat_game = open(".Game.txt", "r")
     stat_game.close()
 
-    while play_again == False:
+    #user game choice
+    print("what do you want to do?")
+    choice = input(" play (1) , reset statistic (2) or quit the game (3)")
 
+    if choice == 2:
+        stat_game = open(".Game.txt", "w")
+        stat_game.write("0")
+        stat_game.close()
+        print("statistics was reset!\n")
+    if choice == 3:
+        stat_score = open(".Score.txt", "w")
+        stat_score.write("score is none\n")
+        stat_score.close()
+
+    while play_again == False:
+        print("Rules: You have to find a sequence of 4 colors:",colors,".\nYou have only",max_attempt," attempts\n")
+
+        #show the number of game and the last score at the start
         stat_game = open(".Game.txt", "r")
         var = str(stat_game.read())
-        print("The total of game is:",var)
+        print("The total of game is:",var,"\n")
         stat_game.close()
+        #allow to take only the last line of the file
+        #with method will automatically close the file at the end of the block
+        with open(".Score.txt", "r") as f: 
+            last_score = f.readlines()[-1]
+        print("Your last",last_score)
 
         code,colors = secret_code()
-        print(code)
+        #print(code)
         attempt = 0
         score = 0
         attempt_left = 0
         while playing == False:
             user_attempt = input_user()
-            temp = user_attempt
+            temp = user_attempt.copy()
             good_place = 0
-            good_lettre = 0
+            good_letter = 0
+            #allow to compare the index of list
+            correct_indices = [] 
+            correct_but_misplaced_indices = []
             i = 0
             n = 0
+            j = 0
+            k = 0
 
             #compare the code and the user attempt
-            for i in range(4):
-                for n in range(4):
-                    if temp[i] == code[n]:
-                        good_lettre +=1
-                        #temp[i] = "."
-                        print(temp,code)
+            for i in range(length):
+                if temp[i] == code[i]:
+                    correct_indices.append(i)
 
-                        if i == n:
-                            good_place += 1
-                            print(temp)
-                            
-                    else:
-                        pass
-                    
-                playing = False
+            #misplaced
+            for i in range(length):
+                for n in range(length):
+                    if temp[i] == code[n] and i not in correct_indices and n not in correct_indices:
+                        correct_but_misplaced_indices.append(i)
+                        break 
 
-            print("Correct:",good_place,"Partiel:",good_lettre,"\n")
+            good_place = len(correct_indices)
+            good_letter = len(correct_but_misplaced_indices)
+
+            playing = False
+
+            print("Correct:",good_place,"Partiel:",good_letter,"\n")
             attempt += 1
             attempt_left = max_attempt - attempt
             print("You got ",attempt_left,"attempts left\n")
@@ -117,10 +141,9 @@ def game():
                 print("Out of attempt! Try again!\n")
                 playing = True
                
-
             if good_place == 4:
                 print("you got the right sequence",user_attempt,"in",attempt,"attempts\n")
-                score = max_attempt - attempt
+                score = attempt - 1
                 print("Your score is:",score ,"\n")
                 playing = True
                 #put the score in a file
