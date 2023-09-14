@@ -26,7 +26,7 @@ def secret_code():
 def user_code():
     """complementary fonction of bot fcontion. It allow to ask a code to the user.
     """
-    user_code = input("give a 4 sequence letter between RGBY")
+    user_code = input("give a 4 sequence letter between RGBY\n")
     tab_user_code = (list(user_code.strip()))
     validation = False
     n = 0
@@ -46,7 +46,7 @@ def user_code():
                 validation = True
 
             n += 1
-    return(user_code)
+    return(tab_user_code)
 
 def input_user():
     """
@@ -227,6 +227,8 @@ def game():
 def bot():
     """fonction to solve intelligibly a game of mastermind
     """
+    secret_code = user_code()
+    print(secret_code)
     
 
 def main():
